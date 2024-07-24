@@ -9,11 +9,16 @@ import {
   Output, SimpleChanges
 } from '@angular/core';
 import {Product} from "../product";
+import {CurrencyPipe, KeyValuePipe, LowerCasePipe} from "@angular/common";
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [],
+  imports: [
+    CurrencyPipe,
+    KeyValuePipe,
+    LowerCasePipe
+  ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

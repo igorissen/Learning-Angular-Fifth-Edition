@@ -2,7 +2,7 @@
   <h1>Products ({{ products.length }})</h1>
 
   <ul class="pill-group">
-    @for (product of products; track product.id; let i = $index) {
+    @for (product of products | sort; track product.id; let i = $index) {
       <li class="pill" (click)="selectedProduct = product">
         {{ i + 1 }}.
         @switch (product.title) {
@@ -28,3 +28,8 @@
   [product]="selectedProduct"
   (added)="onAdded($event)"
 />
+
+<div *appPermission="['admin', 'agent']">
+  <h2>Promotion ad</h2>
+  <ng-template appProductHost />
+</div>

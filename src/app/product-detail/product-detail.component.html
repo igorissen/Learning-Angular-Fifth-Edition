@@ -1,4 +1,10 @@
 @if(product) {
   <p>You selected: <strong>{{ productTitle }}</strong></p>
+  <p>{{ product.price | currency:'EUR' }}</p>
+  <div class="pill-group">
+    @for (category of product.categories | keyvalue; track category.key) {
+      <p class="pill">{{ category.value | lowercase }}</p>
+    }
+  </div>
   <button (click)="addToCart()">Add to cart</button>
 }
