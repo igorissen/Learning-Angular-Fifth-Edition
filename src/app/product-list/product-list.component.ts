@@ -1,9 +1,12 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
 import {Product} from "../product";
 import {ProductDetailComponent} from "../product-detail/product-detail.component";
 import {SortPipe} from "../sort.pipe";
 import {ProductHostDirective} from "../product-host.directive";
 import {PermissionDirective} from "../permission.directive";
+import {ProductsService} from "../products.service";
+import {FavoritesComponent} from "../favorites/favorites.component";
+import {ProductViewComponent} from "../product-view/product-view.component";
 
 @Component({
   selector: 'app-product-list',
@@ -12,52 +15,30 @@ import {PermissionDirective} from "../permission.directive";
     ProductDetailComponent,
     SortPipe,
     ProductHostDirective,
-    PermissionDirective
+    PermissionDirective,
+    FavoritesComponent,
+    ProductViewComponent
   ],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  styleUrl: './product-list.component.css',
+  providers: [ProductsService],
 })
-export class ProductListComponent implements AfterViewInit {
-  products: Product[] = [
-    {
-      id: 1,
-      title: 'Keyboard',
-      price: 100,
-      categories: {
-        1: 'Computing',
-        2: 'Peripherals'
-      }
-    },
-    {
-      id: 2,
-      title: 'Microphone',
-      price: 35,
-      categories: {
-        3: 'Multimedia'
-      }
-    },
-    {
-      id: 3,
-      title: 'Web camera',
-      price: 79,
-      categories: {
-        1: 'Computing',
-        3: 'Multimedia'
-      }
-    },
-    {
-      id: 4,
-      title: 'Tablet',
-      price: 500,
-      categories: {
-        4: 'Entertainment'
-      }
-    }
-  ];
-
+export class ProductListComponent implements OnInit, AfterViewInit {
+  products: Product[] = [];
   selectedProduct: Product | undefined;
 
+  private readonly productsService;
+
   @ViewChild(ProductDetailComponent) productDetail: ProductDetailComponent | undefined;
+
+  // constructor(private readonly productsService: ProductsService) {}
+  constructor() {
+    this.productsService = inject(ProductsService);
+  }
+
+  ngOnInit() {
+    this.products = this.productsService.getProducts();
+  }
 
   ngAfterViewInit() {
     console.log('[ProductListComponent:ngAfterViewInit] Product:', this.productDetail?.product);
