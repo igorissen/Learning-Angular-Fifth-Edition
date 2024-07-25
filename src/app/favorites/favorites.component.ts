@@ -21,6 +21,6 @@ export class FavoritesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.products = this.productsService.getProducts();
+    //this.products = this.productsService.getProducts();
   }
 }

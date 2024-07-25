@@ -1,5 +1,5 @@
-@if (product) {
-  @switch (product.title) {
+@if (product()) {
+  @switch (product()?.title) {
     @case ('Keyboard') {
       ⌨
     }
@@ -10,5 +10,5 @@
       🏷
     }
   }
-  {{ product.title }}
+  {{ product()?.title }}
 }

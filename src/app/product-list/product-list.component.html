@@ -1,8 +1,8 @@
-@if (products.length > 0) {
-  <h1>Products ({{ products.length }})</h1>
+@if (products().length > 0) {
+  <h1>Products ({{ products().length }})</h1>
 
   <ul class="pill-group">
-    @for (product of products | sort; track product.id; let i = $index) {
+    @for (product of products() | sort; track product.id; let i = $index) {
       <li class="pill" (click)="selectedProduct = product">
         {{ i + 1 }}.
         <app-product-view [id]="product.id"/>
@@ -11,10 +11,8 @@
       <p>No products found!</p>
     }
   </ul>
-
-  <h1>Favorites</h1>
-  <app-favorites/>
 }
+
 <app-product-detail
   #productDetail
   [product]="selectedProduct"

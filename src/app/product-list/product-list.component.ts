@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, signal, Signal} from '@angular/core';
 import {Product} from "../product";
 import {ProductDetailComponent} from "../product-detail/product-detail.component";
 import {SortPipe} from "../sort.pipe";
@@ -7,6 +7,7 @@ import {PermissionDirective} from "../permission.directive";
 import {ProductsService} from "../products/products.service";
 import {FavoritesComponent} from "../favorites/favorites.component";
 import {ProductViewComponent} from "../product-view/product-view.component";
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-product-list',
@@ -22,25 +23,16 @@ import {ProductViewComponent} from "../product-view/product-view.component";
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
-export class ProductListComponent implements OnInit, AfterViewInit {
-  products: Product[] = [];
+export class ProductListComponent {
   selectedProduct: Product | undefined;
+  products: Signal<Product[]> = signal([]);
 
   private readonly productsService;
-
-  @ViewChild(ProductDetailComponent) productDetail: ProductDetailComponent | undefined;
 
   // constructor(private readonly productsService: ProductsService) {}
   constructor() {
     this.productsService = inject(ProductsService);
-  }
-
-  ngOnInit() {
-    this.products = this.productsService.getProducts();
-  }
-
-  ngAfterViewInit() {
-    console.log('[ProductListComponent:ngAfterViewInit] Product:', this.productDetail?.product);
+    this.products = toSignal(this.productsService.getProducts(), { initialValue: []});
   }
 
   onAdded(product: Product): void {

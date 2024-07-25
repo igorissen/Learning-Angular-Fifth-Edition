@@ -1,9 +1,22 @@
+<header>{{ title() }}</header>
+
 <main class="main">
   <div class="content">
     <app-product-list />
   </div>
 </main>
+
 <footer appCopyright> - v{{ appSettings.version }}</footer>
+
 <router-outlet></router-outlet>
 
 <input appNumeric />
+<br/>
+<div>
+  <h2>Simple input</h2>
+  <app-key-logger />
+</div>
+<div>
+  <h2>Numeric only input filter</h2>
+  <app-key-logger [numeric]="true" />
+</div>

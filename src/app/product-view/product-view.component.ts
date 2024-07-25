@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {ProductViewService} from "../product-view.service";
 import {Product} from "../product";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-product-view',
@@ -10,14 +11,30 @@ import {Product} from "../product";
   styleUrl: './product-view.component.css',
   providers:[ProductViewService]
 })
-export class ProductViewComponent implements OnInit {
+export class ProductViewComponent implements OnInit, OnDestroy {
   @Input() id: number | undefined;
 
-  product: Product | undefined;
+  product: WritableSignal<Product | undefined> = signal(undefined);
+
+  private product$ = new Subject<void>();
 
   constructor(private readonly productViewService: ProductViewService) {}
 
   ngOnInit() {
-    this.product = this.productViewService.getProduct(this.id!)
+    this.getProduct();
+  }
+
+  ngOnDestroy() {
+    this.product$.next();
+    this.product$.complete();
+  }
+
+  private getProduct() {
+    this.productViewService
+      .getProduct(this.id!)
+      .pipe(
+        takeUntil(this.product$)
+      )
+      .subscribe(product => this.product.set(product));
   }
 }
