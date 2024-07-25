@@ -1,7 +1,7 @@
 import {Component, OnInit, Self} from '@angular/core';
 import {Product} from "../product";
-import {ProductsService} from "../products.service";
-import {FavoritesService} from "../favorites.service";
+import {ProductsService} from "../products/products.service";
+//import {FavoritesService} from "../favorites.service";
 import {favoritesFactory} from "../favorites";
 
 @Component({

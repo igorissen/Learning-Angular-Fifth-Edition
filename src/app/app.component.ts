@@ -5,11 +5,12 @@ import {CopyrightDirective} from "./copyright.directive";
 import {NumericDirective} from "./numeric.directive";
 import {PermissionDirective} from "./permission.directive";
 import {APP_SETTINGS, AppSettings, appSettings} from "./app.settings";
+import {ProductsModule} from "./products/products.module";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ProductListComponent, CopyrightDirective, NumericDirective, PermissionDirective],
+  imports: [RouterOutlet, ProductListComponent, CopyrightDirective, NumericDirective, PermissionDirective, ProductsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [

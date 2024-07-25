@@ -4,7 +4,7 @@ import {ProductDetailComponent} from "../product-detail/product-detail.component
 import {SortPipe} from "../sort.pipe";
 import {ProductHostDirective} from "../product-host.directive";
 import {PermissionDirective} from "../permission.directive";
-import {ProductsService} from "../products.service";
+import {ProductsService} from "../products/products.service";
 import {FavoritesComponent} from "../favorites/favorites.component";
 import {ProductViewComponent} from "../product-view/product-view.component";
 
@@ -21,7 +21,6 @@ import {ProductViewComponent} from "../product-view/product-view.component";
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
-  providers: [ProductsService],
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
   products: Product[] = [];

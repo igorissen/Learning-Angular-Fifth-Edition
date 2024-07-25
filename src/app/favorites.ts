@@ -1,4 +1,4 @@
-import {ProductsService} from "./products.service";
+import {ProductsService} from "./products/products.service";
 import {FavoritesService} from "./favorites.service";
 
 export function favoritesFactory(isFavorite: boolean): () => ProductsService {
