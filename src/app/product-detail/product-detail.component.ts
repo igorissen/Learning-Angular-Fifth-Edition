@@ -1,11 +1,9 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  Output,
-  SimpleChanges
+  OnInit,
+  Output
 } from '@angular/core';
 import {Product} from "../product";
 import {CommonModule} from "@angular/common";
@@ -13,6 +11,7 @@ import {Observable} from "rxjs";
 import {ProductsService} from "../products.service";
 import {NumericDirective} from "../numeric.directive";
 import {AuthService} from "../auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-product-detail',
@@ -24,8 +23,8 @@ import {AuthService} from "../auth.service";
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })
-export class ProductDetailComponent implements OnChanges {
-  @Input() id: number | undefined;
+export class ProductDetailComponent implements OnInit {
+  @Input() id: string | undefined;
   @Output() added: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() removed = new EventEmitter<void>();
 
@@ -34,25 +33,25 @@ export class ProductDetailComponent implements OnChanges {
   constructor(
     private readonly productsService: ProductsService,
     public readonly authService: AuthService,
+    private readonly router: Router,
   ) {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes)
-    this.product$ = this.productsService.getProduct(this.id!);
+  ngOnInit() {
+    this.product$ = this.productsService.getProduct(Number(this.id!))
   }
 
-  addToCart(): void {
-    this.added.emit();
-  }
+  addToCart(): void {}
 
   changePrice(product: Product, price: string): void {
-    this.productsService.updateProduct(product.id, Number(price)).subscribe()
+    this.productsService.updateProduct(product.id, Number(price)).subscribe(() => {
+      this.router.navigate(['/products']);
+    })
   }
 
   remove(product: Product): void {
     this.productsService.removeProduct(product.id).subscribe(() => {
-      this.removed.emit();
+      this.router.navigate(['/products']);
     })
   }
 }

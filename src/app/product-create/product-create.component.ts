@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ProductsService} from "../products.service";
 import {NumericDirective} from "../numeric.directive";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-product-create',
@@ -13,7 +14,8 @@ import {NumericDirective} from "../numeric.directive";
 })
 export class ProductCreateComponent {
   constructor(
-    private readonly productsService: ProductsService
+    private readonly productsService: ProductsService,
+    private readonly router: Router
   ) {
   }
 
@@ -22,6 +24,6 @@ export class ProductCreateComponent {
       title,
       price: Number(price),
       category
-    }).subscribe();
+    }).subscribe(() => this.router.navigate(['/products']));
   }
 }

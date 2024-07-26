@@ -1,13 +1,16 @@
 <header>
+  <div class="menu-links">
+    <a routerLink="/products" routerLinkActive="active">Products</a>
+    <a routerLink="/cart" routerLinkActive="active">Cart</a>
+    <a routerLink="/user" routerLinkActive="active">My Profile</a>
+  </div>
   <app-auth/>
 </header>
 
 <main class="main">
   <div class="content">
-    <app-product-list />
+    <router-outlet></router-outlet>
   </div>
 </main>
 
 <footer appCopyright> - v{{ appSettings.version }}</footer>
-
-<router-outlet></router-outlet>

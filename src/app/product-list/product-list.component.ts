@@ -1,37 +1,36 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from "../product";
-import {ProductDetailComponent} from "../product-detail/product-detail.component";
 import {SortPipe} from "../sort.pipe";
 import {ProductsService} from "../products.service";
-import {ProductCreateComponent} from "../product-create/product-create.component";
-import {Observable} from "rxjs";
+import {Observable, of, switchMap} from "rxjs";
 import {CommonModule} from "@angular/common";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
   imports: [
-    ProductDetailComponent,
     SortPipe,
-    ProductCreateComponent,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
 export class ProductListComponent implements OnInit {
   products$: Observable<Product[]> | undefined
-  selectedProduct: Product | undefined;
 
   constructor(
-    private readonly productsService: ProductsService
-  ) {}
-
-  ngOnInit() {
-    this.products$ = this.productsService.getProducts();
+    private readonly productsService: ProductsService,
+    private readonly activatedRoute: ActivatedRoute,
+  ) {
   }
 
-  onAdded(): void {
-    alert(`${this.selectedProduct?.title} added to the cart!`)
+  ngOnInit() {
+    this.products$ = this.activatedRoute.data.pipe(
+      switchMap(data => {
+        return of(data['products'])
+      })
+    );
   }
 }

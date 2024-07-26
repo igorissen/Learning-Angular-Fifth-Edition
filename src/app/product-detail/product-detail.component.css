@@ -1,3 +1,7 @@
+:host {
+  width: 450px;
+}
+
 .pill-group {
   display: flex;
   flex-direction: row;
