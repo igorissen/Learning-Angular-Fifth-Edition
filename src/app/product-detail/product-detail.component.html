@@ -1,9 +1,12 @@
 @if (product$ | async; as product) {
   <p>You selected: <strong>{{ product.title }}</strong></p>
   <p>{{ product.price | currency:'EUR' }}</p>
-  <form (ngSubmit)="changePrice(product)">
-    <input appNumeric placeholder="New price" name="price" [(ngModel)]="price"/>
-    <button class="secondary" type="submit">Change</button>
+  <form (ngSubmit)="changePrice(product)" #priceForm="ngForm">
+    <input type="number" appNumeric placeholder="New price" name="price" #priceCtrl="ngModel" required min="1" [(ngModel)]="price"/>
+    <button class="secondary" type="submit" [disabled]="priceForm.invalid">Change</button>
+    @if (priceCtrl.dirty && (priceCtrl.invalid || priceCtrl.hasError('min'))) {
+      <span class="help-text">Please enter a valid price</span>
+    }
   </form>
   <div class="pill-group">
     <p class="pill">{{ product.category }}</p>
