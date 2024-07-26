@@ -12,13 +12,16 @@ import {ProductsService} from "../products.service";
 import {NumericDirective} from "../numeric.directive";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import {CartService} from "../cart.service";
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
   imports: [
     CommonModule,
-    NumericDirective
+    NumericDirective,
+    FormsModule
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
@@ -29,11 +32,13 @@ export class ProductDetailComponent implements OnInit {
   @Output() removed = new EventEmitter<void>();
 
   product$: Observable<Product | undefined> | undefined;
+  price: number | undefined;
 
   constructor(
     private readonly productsService: ProductsService,
-    public readonly authService: AuthService,
     private readonly router: Router,
+    private readonly cartService: CartService,
+    public readonly authService: AuthService,
   ) {
   }
 
@@ -41,10 +46,12 @@ export class ProductDetailComponent implements OnInit {
     this.product$ = this.productsService.getProduct(Number(this.id!))
   }
 
-  addToCart(): void {}
+  addToCart(id: number): void {
+    this.cartService.addProduct(id).subscribe();
+  }
 
-  changePrice(product: Product, price: string): void {
-    this.productsService.updateProduct(product.id, Number(price)).subscribe(() => {
+  changePrice(product: Product): void {
+    this.productsService.updateProduct(product.id, this.price!).subscribe(() => {
       this.router.navigate(['/products']);
     })
   }

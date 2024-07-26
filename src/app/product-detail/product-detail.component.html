@@ -1,16 +1,16 @@
 @if (product$ | async; as product) {
   <p>You selected: <strong>{{ product.title }}</strong></p>
   <p>{{ product.price | currency:'EUR' }}</p>
-  <div>
-    <input #price appNumeric placeholder="New price"/>
-    <button class="secondary" (click)="changePrice(product, price.value)">Change</button>
-  </div>
+  <form (ngSubmit)="changePrice(product)">
+    <input appNumeric placeholder="New price" name="price" [(ngModel)]="price"/>
+    <button class="secondary" type="submit">Change</button>
+  </form>
   <div class="pill-group">
     <p class="pill">{{ product.category }}</p>
   </div>
   <div class="button-group">
     @if (authService.isLoggedIn()) {
-      <button (click)="addToCart()">Add to cart</button>
+      <button (click)="addToCart(product.id)">Add to cart</button>
     }
     <button class="delete" (click)="remove(product)">Delete</button>
   </div>
