@@ -1,5 +1,5 @@
 <h1>Add new product</h1>
-<form [formGroup]="productForm" (ngSubmit)="createProduct()">
+<form [formGroup]="productForm!" (ngSubmit)="createProduct()">
   <div>
     <label for="title">Title</label>
     <input id="title" formControlName="title" />
@@ -17,18 +17,6 @@
       <option>Other</option>
     </select>
   </div>
-
-  <h2>Additional details</h2>
-  <form formGroupName="extra">
-    <div>
-      <label for="description">Description</label>
-      <input id="description" formControlName="description" />
-    </div>
-    <div>
-      <label for="photo">Photo URL</label>
-      <input id="photo" formControlName="image">
-    </div>
-  </form>
 
   <div>
     <button type="submit">Create</button>

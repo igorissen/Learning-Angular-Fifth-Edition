@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductsService} from "../products.service";
 import {NumericDirective} from "../numeric.directive";
 import {Router} from "@angular/router";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-product-create',
@@ -14,26 +14,35 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css'
 })
-export class ProductCreateComponent {
-  productForm = new FormGroup({
-    title: new FormControl('', { nonNullable: true}),
-    price: new FormControl<number | undefined>(undefined, {nonNullable:true}),
-    category: new FormControl('', { nonNullable: true}),
-    extra: new FormGroup({
-      image: new FormControl(''),
-      description: new FormControl(''),
-    })
-  });
+export class ProductCreateComponent implements OnInit {
+  productForm: FormGroup<{
+    title: FormControl<string>,
+    price: FormControl<number | undefined>,
+    category: FormControl<string>,
+  }> | undefined;
 
   constructor(
     private readonly productsService: ProductsService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly formBuilder: FormBuilder,
   ) {
+  }
+
+  ngOnInit() {
+    this.buildForm();
   }
 
   createProduct(): void {
     this.productsService
-      .addProduct(this.productForm.value)
+      .addProduct(this.productForm!.value)
       .subscribe(() => this.router.navigate(['/products']));
+  }
+
+  private buildForm(): void {
+    this.productForm = this.formBuilder.nonNullable.group({
+      title: [''],
+      price: this.formBuilder.nonNullable.control<number | undefined>(undefined),
+      category: ['']
+    })
   }
 }
