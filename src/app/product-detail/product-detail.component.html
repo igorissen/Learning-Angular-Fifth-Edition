@@ -1,10 +1,17 @@
-@if(product) {
-  <p>You selected: <strong>{{ productTitle }}</strong></p>
+@if (product$ | async; as product) {
+  <p>You selected: <strong>{{ product.title }}</strong></p>
   <p>{{ product.price | currency:'EUR' }}</p>
-  <div class="pill-group">
-    @for (category of product.categories | keyvalue; track category.key) {
-      <p class="pill">{{ category.value | lowercase }}</p>
-    }
+  <div>
+    <input #price appNumeric placeholder="New price"/>
+    <button class="secondary" (click)="changePrice(product, price.value)">Change</button>
   </div>
-  <button (click)="addToCart()">Add to cart</button>
+  <div class="pill-group">
+    <p class="pill">{{ product.category }}</p>
+  </div>
+  <div class="button-group">
+    @if (authService.isLoggedIn()) {
+      <button (click)="addToCart()">Add to cart</button>
+    }
+    <button class="delete" (click)="remove(product)">Delete</button>
+  </div>
 }

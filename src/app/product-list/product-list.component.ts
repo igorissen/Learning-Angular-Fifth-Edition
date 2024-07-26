@@ -1,13 +1,11 @@
-import {Component, inject, signal, Signal} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Product} from "../product";
 import {ProductDetailComponent} from "../product-detail/product-detail.component";
 import {SortPipe} from "../sort.pipe";
-import {ProductHostDirective} from "../product-host.directive";
-import {PermissionDirective} from "../permission.directive";
-import {ProductsService} from "../products/products.service";
-import {FavoritesComponent} from "../favorites/favorites.component";
-import {ProductViewComponent} from "../product-view/product-view.component";
-import {toSignal} from "@angular/core/rxjs-interop";
+import {ProductsService} from "../products.service";
+import {ProductCreateComponent} from "../product-create/product-create.component";
+import {Observable} from "rxjs";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-product-list',
@@ -15,27 +13,25 @@ import {toSignal} from "@angular/core/rxjs-interop";
   imports: [
     ProductDetailComponent,
     SortPipe,
-    ProductHostDirective,
-    PermissionDirective,
-    FavoritesComponent,
-    ProductViewComponent
+    ProductCreateComponent,
+    CommonModule
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
+  products$: Observable<Product[]> | undefined
   selectedProduct: Product | undefined;
-  products: Signal<Product[]> = signal([]);
 
-  private readonly productsService;
+  constructor(
+    private readonly productsService: ProductsService
+  ) {}
 
-  // constructor(private readonly productsService: ProductsService) {}
-  constructor() {
-    this.productsService = inject(ProductsService);
-    this.products = toSignal(this.productsService.getProducts(), { initialValue: []});
+  ngOnInit() {
+    this.products$ = this.productsService.getProducts();
   }
 
-  onAdded(product: Product): void {
-    alert(`${product.title} added to the cart!`)
+  onAdded(): void {
+    alert(`${this.selectedProduct?.title} added to the cart!`)
   }
 }
