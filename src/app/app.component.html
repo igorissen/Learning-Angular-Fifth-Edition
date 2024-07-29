@@ -1,10 +1,23 @@
-<header>
+<!--<header>
   <div class="menu-links">
     <a routerLink="/products" routerLinkActive="active">Products</a>
     <a routerLink="/cart" routerLinkActive="active">Cart</a>
     <a routerLink="/user" routerLinkActive="active">My Profile</a>
   </div>
   <app-auth/>
+</header>-->
+
+<header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h2>{{appSettings.title}}</h2>
+      <span class="spacer"></span>
+      <button mat-flat-button color="primary" routerLink="/products">Products</button>
+      <button mat-flat-button color="primary" routerLink="/cart" [matBadge]="cartService.cart?.products?.length" matBadgeColor="accent">My cart</button>
+      <button mat-flat-button color="primary" routerLink="/user">My profile</button>
+      <app-auth/>
+    </mat-toolbar-row>
+  </mat-toolbar>
 </header>
 
 <main class="main">
@@ -13,4 +26,11 @@
   </div>
 </main>
 
-<footer appCopyright> - v{{ appSettings.version }}</footer>
+<!--<footer appCopyright> - v{{ appSettings.version }}</footer>-->
+<footer>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span appCopyright> - v{{ appSettings.version }}</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</footer>

@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../auth.service";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [],
+  imports: [
+    MatButton
+  ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })

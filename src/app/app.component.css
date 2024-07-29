@@ -117,14 +117,6 @@ main {
   }
 }
 
-header {
-  display: flex;
-  flex-direction: row;
-  gap: 0.73rem;
-  justify-content: end;
-  margin-top: 1.5rem;
-}
-
 .menu-links {
   display: flex;
   align-items: center;
@@ -139,4 +131,8 @@ header {
 }
 .menu-links a.active {
   color: var(--electric-violet);
+}
+
+button {
+  margin: 5px;
 }

@@ -15,6 +15,11 @@ import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {CartService} from "../cart.service";
 import {PriceMaximumDirective} from "../price-maximum.directive";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatError, MatFormField, MatInput, MatSuffix} from "@angular/material/input";
+import {MatIcon} from "@angular/material/icon";
+import {MatChip, MatChipSet} from "@angular/material/chips";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-product-detail',
@@ -23,7 +28,17 @@ import {PriceMaximumDirective} from "../price-maximum.directive";
     CommonModule,
     NumericDirective,
     FormsModule,
-    PriceMaximumDirective
+    PriceMaximumDirective,
+    MatButton,
+    MatInput,
+    MatIconButton,
+    MatSuffix,
+    MatIcon,
+    MatError,
+    MatFormField,
+    MatChipSet,
+    MatChip,
+    MatSnackBarModule
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
@@ -41,6 +56,7 @@ export class ProductDetailComponent implements OnInit {
     private readonly router: Router,
     private readonly cartService: CartService,
     public readonly authService: AuthService,
+    private readonly matSnackBar: MatSnackBar
   ) {
   }
 
@@ -49,7 +65,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(id: number): void {
-    this.cartService.addProduct(id).subscribe();
+    this.cartService.addProduct(id).subscribe(() => {
+      this.matSnackBar.open('Product added to cart!', undefined, { duration: 1000 });
+    });
   }
 
   changePrice(product: Product): void {

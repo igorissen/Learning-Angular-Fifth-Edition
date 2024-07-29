@@ -4,13 +4,18 @@ import {Product} from "../product";
 import {CartService} from "../cart.service";
 import {ProductsService} from "../products.service";
 import {NumericDirective} from "../numeric.directive";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-cart',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NumericDirective
+    NumericDirective,
+    MatFormField,
+    MatLabel,
+    MatInput
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'

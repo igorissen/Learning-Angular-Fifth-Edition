@@ -33,18 +33,13 @@
 button.secondary {
   display: inline;
   margin-left: 5px;
-  --button-accent: var(--vivid-pink);
 }
 
 button.delete {
   display: inline;
   margin-left: 5px;
-  --button-accent: var(--hot-red);
 }
 
-.button-group {
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  flex-wrap: wrap;
+mat-chip-set {
+  margin-bottom: 1.375rem;
 }

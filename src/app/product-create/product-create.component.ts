@@ -4,13 +4,24 @@ import {NumericDirective} from "../numeric.directive";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {priceMaximumValidator} from "../price-maximum.validator";
+import {MatButton} from "@angular/material/button";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @Component({
   selector: 'app-product-create',
   standalone: true,
   imports: [
     NumericDirective,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButton,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    MatSelect,
+    MatOption
   ],
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css'
