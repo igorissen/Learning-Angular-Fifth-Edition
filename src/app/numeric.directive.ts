@@ -14,8 +14,8 @@ export class NumericDirective {
     const charCode = event.key.charCodeAt(0);
 
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      event.preventDefault();
       this.currentClass = 'invalid';
+      event.preventDefault();
     } else {
       this.currentClass = 'valid';
     }
