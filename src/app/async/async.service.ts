@@ -12,4 +12,9 @@ export class AsyncService {
   getItems(): Observable<string[]> {
     return of(this.items).pipe(delay(500));
   }
+
+  setItems(item: string): string[] {
+    this.items.push(item);
+    return this.items;
+  }
 }

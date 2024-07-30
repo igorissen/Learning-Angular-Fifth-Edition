@@ -10,7 +10,19 @@ describe('AsyncService', () => {
     service = TestBed.inject(AsyncService);
   });
 
-  it('should be created', () => {
+  it('creates service', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('sets items', () => {
+    const result = service.setItems('Camera');
+    expect(result.length).toBe(4);
+  });
+
+  it('retrieves items', (done) => {
+    service.getItems().subscribe(items => {
+      expect(items.length).toBe(3);
+      done();
+    })
   });
 });
