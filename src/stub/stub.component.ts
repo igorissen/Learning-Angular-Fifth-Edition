@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {StubService} from "./stub.service";
 
 @Component({
+  providers: [StubService],
   selector: 'app-stub',
   standalone: true,
   templateUrl: './stub.component.html',

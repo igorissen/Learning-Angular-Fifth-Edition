@@ -13,7 +13,15 @@ describe('StubComponent', () => {
       providers: [
         { provide: StubService, useValue: serviceStub }
       ]
-    }).compileComponents();
+    })
+      .overrideComponent(StubComponent, {
+        set: {
+          providers: [
+            { provide: StubService, useValue: serviceStub }
+          ]
+        }
+      })
+      .compileComponents();
   });
 
   describe('status', () => {
@@ -34,7 +42,7 @@ describe('StubComponent', () => {
         const message = fixture.nativeElement.querySelector('span').textContent;
 
         // then
-        expect(message).toContain('is on mission')
+        expect(message).toEqual('Boothstomper is on mission')
       });
     });
 
@@ -49,7 +57,7 @@ describe('StubComponent', () => {
         const message = fixture.nativeElement.querySelector('span').textContent;
 
         // then
-        expect(message).toContain('is available')
+        expect(message).toEqual('Boothstomper is available')
       });
     })
   })
