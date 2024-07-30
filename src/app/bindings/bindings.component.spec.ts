@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BindingsComponent } from './bindings.component';
 import {Component} from "@angular/core";
 import {By} from "@angular/platform-browser";
+import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
+import {MatButtonHarness} from "@angular/material/button/testing";
 
 describe('BindingsComponent', () => {
   let component: TestHostComponent;
@@ -37,6 +39,15 @@ describe('BindingsComponent', () => {
   it('emits the like event using debugElement', () => {
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
+    expect(component.isFavorite).toBeTrue();
+  });
+
+  it('emits the like event using component harness (Angular CDK + Material)', async () => {
+    const loader = TestbedHarnessEnvironment.loader(fixture);
+    const button = await loader.getHarness(MatButtonHarness);
+
+    await button.click();
+
     expect(component.isFavorite).toBeTrue();
   });
 });
